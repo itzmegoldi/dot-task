@@ -14,7 +14,8 @@
     </div>
     <v-row>
       <v-col
-        cols="4"
+        cols="12"
+        sm="4"
         class="card-column"
         id="box-droppable"
         @drop="drop"
@@ -37,7 +38,8 @@
         </div>
       </v-col>
       <v-col
-        cols="4"
+        cols="12"
+        sm="4"
         class="card-column"
         id="box-droppable"
         @drop="drop"
@@ -60,7 +62,8 @@
         </div>
       </v-col>
       <v-col
-        cols="4"
+        cols="12"
+        sm="4"
         class="card-column"
         id="box-droppable"
         @drop="drop"
@@ -75,8 +78,6 @@
           :id="`card2${i}`"
         >
           <card-component
-            v-for="(item, i) in cardItem3"
-            :key="i"
             :actDetail="{ index: i, column: 'cardItem3' }"
             :cardDetail="item"
             @deleteItem="deleteItem"
