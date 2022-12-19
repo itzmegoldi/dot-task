@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="d-flex">
+    <div class="d-flex py-4">
       <v-spacer></v-spacer>
       <v-btn
         color="primary"
@@ -13,37 +13,75 @@
       </v-btn>
     </div>
     <v-row>
-      <v-col cols="4" class="card-column">
+      <v-col
+        cols="4"
+        class="card-column"
+        id="box-droppable"
+        @drop="drop"
+        @dragover="allowDrop"
+      >
         <h3 class="px-4">Column 1</h3>
-        <card-component
+        <div
           v-for="(item, i) in cardItem1"
           :key="i"
-          :index="i"
-          :actDetail="{ index: i, column: 'cardItem1' }"
-          :cardDetail="item"
-          @deleteItem="deleteItem"
-        ></card-component>
+          draggable="true"
+          @dragstart="drag"
+          :id="`card${i}`"
+        >
+          <card-component
+            :index="i"
+            :actDetail="{ index: i, column: 'cardItem1' }"
+            :cardDetail="item"
+            @deleteItem="deleteItem"
+          ></card-component>
+        </div>
       </v-col>
-      <v-col cols="4" class="card-column">
+      <v-col
+        cols="4"
+        class="card-column"
+        id="box-droppable"
+        @drop="drop"
+        @dragover="allowDrop"
+      >
         <h3 class="px-4">Column 2</h3>
-        <card-component
+        <div
           v-for="(item, i) in cardItem2"
           :key="i"
-          :index="i"
-          :actDetail="{ index: i, column: 'cardItem2' }"
-          :cardDetail="item"
-          @deleteItem="deleteItem"
-        ></card-component>
+          draggable="true"
+          @dragstart="drag"
+          :id="`card1${i}`"
+        >
+          <card-component
+            :index="i"
+            :actDetail="{ index: i, column: 'cardItem2' }"
+            :cardDetail="item"
+            @deleteItem="deleteItem"
+          ></card-component>
+        </div>
       </v-col>
-      <v-col cols="4" class="card-column">
+      <v-col
+        cols="4"
+        class="card-column"
+        id="box-droppable"
+        @drop="drop"
+        @dragover="allowDrop"
+      >
         <h3 class="px-4">Column 3</h3>
-        <card-component
+        <div
           v-for="(item, i) in cardItem3"
           :key="i"
-          :actDetail="{ index: i, column: 'cardItem3' }"
-          :cardDetail="item"
-          @deleteItem="deleteItem"
-        ></card-component>
+          draggable="true"
+          @dragstart="drag"
+          :id="`card2${i}`"
+        >
+          <card-component
+            v-for="(item, i) in cardItem3"
+            :key="i"
+            :actDetail="{ index: i, column: 'cardItem3' }"
+            :cardDetail="item"
+            @deleteItem="deleteItem"
+          ></card-component>
+        </div>
       </v-col>
     </v-row>
     <card-modal @addData="addData" @editData="editData"></card-modal>
@@ -123,6 +161,19 @@ export default {
       const { index, column } = obj;
       this[column].splice(index, 1);
     },
+
+    // Drag and drop methods
+    drag(ev) {
+      ev.dataTransfer.setData("text", ev.target.id);
+    },
+    allowDrop(ev) {
+      ev.preventDefault();
+    },
+    drop(ev) {
+      ev.preventDefault();
+      let data = ev.dataTransfer.getData("text");
+      ev.target.appendChild(document.getElementById(data));
+    },
   },
   mounted() {},
   created() {},
@@ -134,5 +185,16 @@ export default {
   max-height: 100vh;
   min-height: 100vh;
   overflow-y: auto;
+}
+#draggable-container {
+  width: 50%;
+  min-height: 300px;
+  padding: 10px;
+  border: 1px solid #aaaaaa;
+}
+#box-droppable {
+  width: 50%;
+  padding: 10px;
+  border: 1px solid #aaaaaa;
 }
 </style>

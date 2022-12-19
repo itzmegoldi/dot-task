@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-4">
+  <div class="pa-4" >
     <v-card class="elevation-4">
       <v-card-title>
         <span>{{ cardDetail.title }}</span>
